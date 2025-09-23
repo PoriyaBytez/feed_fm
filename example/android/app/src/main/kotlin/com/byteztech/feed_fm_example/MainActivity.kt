@@ -1,0 +1,5 @@
+package com.byteztech.feed_fm_example
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
