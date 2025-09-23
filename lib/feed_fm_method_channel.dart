@@ -7,7 +7,7 @@ import 'feed_fm_platform_interface.dart';
 class MethodChannelFeedFm extends FeedFmPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('feed_fm');
+  final methodChannel = const MethodChannel('feedfm');
 
   @override
   Future<String?> getPlatformVersion() async {
