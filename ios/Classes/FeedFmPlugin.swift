@@ -2,29 +2,16 @@ import Flutter
 import UIKit
 import FeedMedia
 
-@main
-@objc class AppDelegate: FlutterAppDelegate {
-
+public class FeedFmPlugin: NSObject, FlutterPlugin {
   private var player: FMAudioPlayer?
 
-  override func application(
-  _ application: UIApplication,
-  didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-
-    GeneratedPluginRegistrant.register(with: self)
-
-    let controller = window?.rootViewController as! FlutterViewController
-    let feedfmChannel = FlutterMethodChannel(name: "feedfm", binaryMessenger: controller.binaryMessenger)
-
-    feedfmChannel.setMethodCallHandler { [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) in
-      self?.handleMethodCall(call: call, result: result)
-    }
-
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  public static func register(with registrar: FlutterPluginRegistrar) {
+    let channel = FlutterMethodChannel(name: "feedfm", binaryMessenger: registrar.messenger())
+    let instance = FeedFmPlugin()
+    registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
-  private func handleMethodCall(call: FlutterMethodCall, result: @escaping FlutterResult) {
+  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
     case "initialize":
       guard let args = call.arguments as? [String: Any],
@@ -33,7 +20,6 @@ import FeedMedia
         result(FlutterError(code: "INVALID_ARGS", message: "Token or secret missing", details: nil))
         return
       }
-
       FMAudioPlayer.setClientToken(token, secret: secret)
       self.player = FMAudioPlayer.shared()
       result(true)
@@ -63,24 +49,3 @@ import FeedMedia
     }
   }
 }
-
-
-//import Flutter
-//import UIKit
-//
-//public class FeedFmPlugin: NSObject, FlutterPlugin {
-//  public static func register(with registrar: FlutterPluginRegistrar) {
-//    let channel = FlutterMethodChannel(name: "feed_fm", binaryMessenger: registrar.messenger())
-//    let instance = FeedFmPlugin()
-//    registrar.addMethodCallDelegate(instance, channel: channel)
-//  }
-//
-//  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-//    switch call.method {
-//    case "getPlatformVersion":
-//      result("iOS " + UIDevice.current.systemVersion)
-//    default:
-//      result(FlutterMethodNotImplemented)
-//    }
-//  }
-//}

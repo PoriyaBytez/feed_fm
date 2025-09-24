@@ -1,0 +1,37 @@
+PODS:
+  - feed_fm (0.0.1):
+    - FeedMedia (~> 5.2.2)
+    - Flutter
+  - FeedMedia (5.2.2):
+    - FeedMedia/Core (= 5.2.2)
+  - FeedMedia/Core (5.2.2)
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - feed_fm (from `.symlinks/plugins/feed_fm/ios`)
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+
+SPEC REPOS:
+  trunk:
+    - FeedMedia
+
+EXTERNAL SOURCES:
+  feed_fm:
+    :path: ".symlinks/plugins/feed_fm/ios"
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+
+SPEC CHECKSUMS:
+  feed_fm: 92e2914f299c20cf480ae0d43c3c15f56b9429d2
+  FeedMedia: 956f02a0b465e6c58bacb1f18fbbb212df27ebef
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+
+PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+
+COCOAPODS: 1.16.2
