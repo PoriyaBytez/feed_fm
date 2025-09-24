@@ -18,6 +18,7 @@ class FeedFm {
   static Future<void> pause() => _channel.invokeMethod('pause');
   static Future<void> skip() => _channel.invokeMethod('skip');
 
+
   static Future<List<String>> stations() async {
     final result = await _channel.invokeMethod('stations');
     return List<String>.from(result ?? []);
