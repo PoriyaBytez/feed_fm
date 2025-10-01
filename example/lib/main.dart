@@ -1,9 +1,8 @@
-import 'package:feed_fm/feed_fm_initialize.dart';
+import 'package:feed_fm/feed_fm.dart';
 import 'package:flutter/material.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await FeedFm.initialize(token: "demo", secret: "demo");
+
+void main() {
   runApp(const MyApp());
 }
 
@@ -12,78 +11,146 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: FeedFmDemo(),
+    return MaterialApp(
+      title: 'FeedFM Demo',
+      home: MyHomePage(),
     );
   }
 }
 
-class FeedFmDemo extends StatefulWidget {
-  const FeedFmDemo({super.key});
+class MyHomePage extends StatelessWidget {
+  void _initFeedFm() async {
+    await FeedFm.initialize('demo', 'demo');
+  }
 
-  @override
-  State<FeedFmDemo> createState() => _FeedFmDemoState();
-}
+  void _play() async {
+    await FeedFm.play();
+  }
 
-class _FeedFmDemoState extends State<FeedFmDemo> {
-  List<String> stations = [];
+  void _pause() async {
+    await FeedFm.pause();
+  }
 
-  Future<void> _loadStations() async {
-    final list = await FeedFm.stations();
-    setState(() {
-      stations = list;
-    });
+  void _skip() async {
+    await FeedFm.skip();
+  }
+
+  void _showStations(BuildContext context) async {
+    final stations = await FeedFm.stations();
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Stations'),
+        content: Text(stations.join('\n')),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Feed.fm Demo")),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      appBar: AppBar(title: const Text('FeedFM Demo')),
+      body: const Center(child: Text('FeedFM Plugin Example')),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          // Buttons
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                ElevatedButton(
-                    onPressed: () => FeedFm.play(), child: const Text("Play")),
-                ElevatedButton(
-                    onPressed: () => FeedFm.pause(), child: const Text("Pause")),
-                ElevatedButton(
-                    onPressed: () => FeedFm.skip(), child: const Text("Skip")),
-                ElevatedButton(
-                  onPressed: _loadStations,
-                  child: const Text("Get Stations"),
-                ),
-              ],
-            ),
+          FloatingActionButton(
+            onPressed: _initFeedFm,
+            child: const Icon(Icons.music_note),
+            heroTag: 'init',
           ),
-
-          const Divider(),
-
-          // Station List
-          Expanded(
-            child: stations.isEmpty
-                ? const Center(child: Text("No stations loaded"))
-                : ListView.builder(
-              itemCount: stations.length,
-              itemBuilder: (context, index) {
-                final station = stations[index];
-                return ListTile(
-                  leading: const Icon(Icons.radio),
-                  title: Text(station),
-                  onTap: () {
-                    debugPrint("Selected Station: $station");
-                    // Future: Play specific station if supported
-                  },
-                );
-              },
-            ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: _play,
+            child: const Icon(Icons.play_arrow),
+            heroTag: 'play',
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: _pause,
+            child: const Icon(Icons.pause),
+            heroTag: 'pause',
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: _skip,
+            child: const Icon(Icons.skip_next),
+            heroTag: 'skip',
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () => _showStations(context),
+            child: const Icon(Icons.list),
+            heroTag: 'stations',
           ),
         ],
       ),
     );
   }
 }
+
+
+
+// import 'package:flutter/material.dart';
+// import 'dart:async';
+//
+// import 'package:flutter/services.dart';
+// import 'package:feed_fm/feed_fm.dart';
+//
+// void main() {
+//   runApp(const MyApp());
+// }
+//
+// class MyApp extends StatefulWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   State<MyApp> createState() => _MyAppState();
+// }
+//
+// class _MyAppState extends State<MyApp> {
+//   String _platformVersion = 'Unknown';
+//   final _feedFmPlugin = FeedFm();
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     initPlatformState();
+//   }
+//
+//   // Platform messages are asynchronous, so we initialize in an async method.
+//   Future<void> initPlatformState() async {
+//     String platformVersion;
+//     // Platform messages may fail, so we use a try/catch PlatformException.
+//     // We also handle the message potentially returning null.
+//     try {
+//       platformVersion =
+//           await FeedFm.getPlatformVersion() ?? 'Unknown platform version';
+//     } on PlatformException {
+//       platformVersion = 'Failed to get platform version.';
+//     }
+//
+//     // If the widget was removed from the tree while the asynchronous platform
+//     // message was in flight, we want to discard the reply rather than calling
+//     // setState to update our non-existent appearance.
+//     if (!mounted) return;
+//
+//     setState(() {
+//       _platformVersion = platformVersion;
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Plugin example app'),
+//         ),
+//         body: Center(
+//           child: Text('Running on: $_platformVersion\n'),
+//         ),
+//       ),
+//     );
+//   }
+// }

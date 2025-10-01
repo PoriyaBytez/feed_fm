@@ -1,10 +1,10 @@
 PODS:
   - feed_fm (0.0.1):
-    - FeedMedia (~> 5.2.2)
+    - FeedMedia
     - Flutter
-  - FeedMedia (5.2.2):
-    - FeedMedia/Core (= 5.2.2)
-  - FeedMedia/Core (5.2.2)
+  - FeedMedia (5.7.1):
+    - FeedMedia/Core (= 5.7.1)
+  - FeedMedia/Core (5.7.1)
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
@@ -27,8 +27,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  feed_fm: 92e2914f299c20cf480ae0d43c3c15f56b9429d2
-  FeedMedia: 956f02a0b465e6c58bacb1f18fbbb212df27ebef
+  feed_fm: cb10ebdee6d37f664c4281919dfa99a93e590667
+  FeedMedia: e07c0474f8a3e847a379708fb4cfab71cb156c71
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
 
