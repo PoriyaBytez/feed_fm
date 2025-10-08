@@ -329,12 +329,15 @@ class Station {
   final String id;
   final String name;
   final String description;
+  final String image;
+
 
   Station({
     this.index,
     required this.id,
     required this.name,
     this.description = '',
+    this.image = '',
   });
 
   factory Station.fromMap(Map<String, dynamic> map) {
@@ -343,6 +346,7 @@ class Station {
       id: map['id']?.toString() ?? '',
       name: map['name'] as String? ?? '',
       description: map['description'] as String? ?? '',
+      image: map['image'] as String? ?? '',
     );
   }
 
@@ -352,6 +356,7 @@ class Station {
       'id': id,
       'name': name,
       'description': description,
+      'image': image,
     };
   }
 }

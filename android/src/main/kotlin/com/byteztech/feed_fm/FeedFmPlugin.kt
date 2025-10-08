@@ -685,7 +685,8 @@ class FeedFmPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             // Expose name as id for cross-platform consistency
             "id" to (station.name ?: ""),
             "name" to (station.name ?: ""),
-            "description" to (station.options?.get("description") ?: "")
+            "description" to (station.options?.get("description") ?: ""),
+            "image" to (station.options?.get("image") ?: "")
           )
         }
         result.success(payload)
