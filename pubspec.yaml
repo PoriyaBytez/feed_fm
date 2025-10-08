@@ -18,3 +18,4 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
+  plugin_platform_interface: ^2.1.2
