@@ -9,6 +9,9 @@ import AVFoundation
 private let iosStationNames: [String] = [
     "Top Hits",
     "Pop",
+    "Rock",
+    "Hip Hop",
+    "Electronic"
 ]
 
 // ======================================================

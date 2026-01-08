@@ -346,7 +346,8 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                         : null,
                     onChangeEnd: duration > 0
                         ? (val) async {
-                      final targetSeconds = (val.clamp(0.0, 1.0) * duration).round();
+                      final targetSeconds = (val.clamp(0.0, 1.0) * duration)
+                          .round();
                       final ok = await FeedFm.seekTo(targetSeconds);
                       if (!mounted) return;
                       if (ok) {
@@ -355,7 +356,8 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                         });
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Seek not supported by this SDK version')),
+                          const SnackBar(content: Text(
+                              'Seek not supported by this SDK version')),
                         );
                       }
                       setState(() {
