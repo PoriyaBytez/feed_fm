@@ -287,13 +287,13 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                 ),
                 child: artUrl.isNotEmpty
                     ? ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          artUrl,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => _placeholderArt(),
-                        ),
-                      )
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    artUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _placeholderArt(),
+                  ),
+                )
                     : _placeholderArt(),
               ),
             ),
@@ -338,30 +338,30 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                     value: (_isSeeking ? _pendingProgress : progress).clamp(0.0, 1.0),
                     onChanged: duration > 0
                         ? (val) {
-                            setState(() {
-                              _isSeeking = true;
-                              _pendingProgress = val.clamp(0.0, 1.0);
-                            });
-                          }
+                      setState(() {
+                        _isSeeking = true;
+                        _pendingProgress = val.clamp(0.0, 1.0);
+                      });
+                    }
                         : null,
                     onChangeEnd: duration > 0
                         ? (val) async {
-                            final targetSeconds = (val.clamp(0.0, 1.0) * duration).round();
-                            final ok = await FeedFm.seekTo(targetSeconds);
-                            if (!mounted) return;
-                            if (ok) {
-                              setState(() {
-                                currentPosition = targetSeconds;
-                              });
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Seek not supported by this SDK version')),
-                              );
-                            }
-                            setState(() {
-                              _isSeeking = false;
-                            });
-                          }
+                      final targetSeconds = (val.clamp(0.0, 1.0) * duration).round();
+                      final ok = await FeedFm.seekTo(targetSeconds);
+                      if (!mounted) return;
+                      if (ok) {
+                        setState(() {
+                          currentPosition = targetSeconds;
+                        });
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Seek not supported by this SDK version')),
+                        );
+                      }
+                      setState(() {
+                        _isSeeking = false;
+                      });
+                    }
                         : null,
                     activeColor: Colors.white,
                     inactiveColor: Colors.white24,

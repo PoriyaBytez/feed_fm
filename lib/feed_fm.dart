@@ -2,13 +2,19 @@ import 'package:flutter/services.dart';
 
 class FeedFm {
   static const MethodChannel _methodChannel = MethodChannel('feed_fm');
-  static const EventChannel _stateEventChannel = EventChannel('feed_fm/state_events');
-  static const EventChannel _trackEventChannel = EventChannel('feed_fm/track_events');
-  static const EventChannel _progressEventChannel = EventChannel('feed_fm/progress_events');
-  static const EventChannel _skipEventChannel = EventChannel('feed_fm/skip_events');
+  static const EventChannel _stateEventChannel =
+  EventChannel('feed_fm/state_events');
+  static const EventChannel _trackEventChannel =
+  EventChannel('feed_fm/track_events');
+  static const EventChannel _progressEventChannel =
+  EventChannel('feed_fm/progress_events');
+  static const EventChannel _skipEventChannel =
+  EventChannel('feed_fm/skip_events');
   // New event channels
-  static const EventChannel _stationEventChannel = EventChannel('feed_fm/station_events');
-  static const EventChannel _errorEventChannel = EventChannel('feed_fm/error_events');
+  static const EventChannel _stationEventChannel =
+  EventChannel('feed_fm/station_events');
+  static const EventChannel _errorEventChannel =
+  EventChannel('feed_fm/error_events');
 
   static Stream<PlayerStateEvent>? _stateStream;
   static Stream<Play>? _trackStream;
@@ -93,13 +99,16 @@ class FeedFm {
   }
 
   static Future<void> selectStationById(String stationId) async {
-    await _methodChannel.invokeMethod('selectStationById', {'stationId': stationId});
+    await _methodChannel
+        .invokeMethod('selectStationById', {'stationId': stationId});
   }
 
   static Future<List<Station>> getStations() async {
     final result = await _methodChannel.invokeMethod('getStations');
     if (result is List) {
-      return result.map((e) => Station.fromMap(Map<String, dynamic>.from(e))).toList();
+      return result
+          .map((e) => Station.fromMap(Map<String, dynamic>.from(e)))
+          .toList();
     }
     return [];
   }
@@ -119,7 +128,8 @@ class FeedFm {
 
   // Autoplay preferences on station change
   static Future<void> setAutoplayOnStationChange(bool enabled) async {
-    await _methodChannel.invokeMethod('setAutoplayOnStationChange', {'enabled': enabled});
+    await _methodChannel
+        .invokeMethod('setAutoplayOnStationChange', {'enabled': enabled});
   }
 
   // ====================================
@@ -175,7 +185,8 @@ class FeedFm {
   }
 
   static Future<void> setSecondsOfCrossfade(int seconds) async {
-    await _methodChannel.invokeMethod('setSecondsOfCrossfade', {'seconds': seconds});
+    await _methodChannel
+        .invokeMethod('setSecondsOfCrossfade', {'seconds': seconds});
   }
 
   // New: get seconds of crossfade
@@ -208,7 +219,8 @@ class FeedFm {
   // New: seek to position (seconds)
   static Future<bool> seekTo(int seconds) async {
     try {
-      final result = await _methodChannel.invokeMethod('seekTo', {'position': seconds});
+      final result =
+      await _methodChannel.invokeMethod('seekTo', {'position': seconds});
       return result == true;
     } catch (e) {
       return false;
@@ -259,10 +271,11 @@ class FeedFm {
   }
 
   static Stream<ProgressEvent> get onProgressChanged {
-    _progressStream ??= _progressEventChannel.receiveBroadcastStream().map((event) {
-      final map = Map<String, dynamic>.from(event);
-      return ProgressEvent.fromMap(map);
-    });
+    _progressStream ??=
+        _progressEventChannel.receiveBroadcastStream().map((event) {
+          final map = Map<String, dynamic>.from(event);
+          return ProgressEvent.fromMap(map);
+        });
     return _progressStream!;
   }
 
@@ -276,10 +289,11 @@ class FeedFm {
 
   // New: Station changed stream
   static Stream<Station> get onStationChanged {
-    _stationStream ??= _stationEventChannel.receiveBroadcastStream().map((event) {
-      final map = Map<String, dynamic>.from(event);
-      return Station.fromMap(map);
-    });
+    _stationStream ??=
+        _stationEventChannel.receiveBroadcastStream().map((event) {
+          final map = Map<String, dynamic>.from(event);
+          return Station.fromMap(map);
+        });
     return _stationStream!;
   }
 
@@ -330,7 +344,6 @@ class Station {
   final String name;
   final String description;
   final String image;
-
 
   Station({
     this.index,
@@ -434,7 +447,8 @@ class AudioFile {
       replaygainTrackGain: (map['replaygain_track_gain'] ?? 0.0) is double
           ? map['replaygain_track_gain']
           : (map['replaygain_track_gain'] as num?)?.toDouble() ?? 0.0,
-      extra: Extra.fromMap((map['extra'] as Map?)?.cast<String, dynamic>() ?? {}),
+      extra:
+      Extra.fromMap((map['extra'] as Map?)?.cast<String, dynamic>() ?? {}),
     );
   }
 
@@ -670,11 +684,13 @@ class SkipEvent {
     );
   }
 }
+
 // New: Error event model
 class FeedFmError {
   final String message;
   FeedFmError(this.message);
-  factory FeedFmError.fromMap(Map<String, dynamic> map) => FeedFmError(map['message']?.toString() ?? '');
+  factory FeedFmError.fromMap(Map<String, dynamic> map) =>
+      FeedFmError(map['message']?.toString() ?? '');
 }
 /// =================================================================///
 // // import 'dart:async';
